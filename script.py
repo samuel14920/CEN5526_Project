@@ -13,6 +13,10 @@ mood_data = pd.read_csv('mood_data.csv')
 # Merge the datasets on date and time
 # merged_data = pd.merge(app_data, mood_data, on=['Date', 'Time'], how='inner')
 merged_data = pd.merge(app_data, mood_data, on=['Date'], how='inner')
+
+# encode "App name" column as numeric values
+merged_data['App name'] = pd.factorize(merged_data['App name'])[0]
+
 print(merged_data)
 # Split the data into training and testing sets
 X = merged_data[['Duration_Seconds', 'App name']]
