@@ -5,18 +5,27 @@ from sklearn.model_selection import train_test_split
 app_data = pd.read_csv('app_data.csv')
 mood_data = pd.read_csv('mood_data.csv')
 
-# # Normalize the time in app_data to match the times in mood_data
-# app_data['Time'] = pd.to_datetime(app_data['Time'])
-# app_data['Time'] = app_data['Time'].dt.floor('H')
-# app_data['Time'] = app_data['Time'].dt.strftime('%I:%M%p').str.lower()
 
 # Merge the datasets on date and time
-# merged_data = pd.merge(app_data, mood_data, on=['Date', 'Time'], how='inner')
 merged_data = pd.merge(app_data, mood_data, on=['Date'], how='inner')
 print(merged_data)
 # encode "App name" column as numeric values
-merged_data['App name'] = pd.factorize(merged_data['App name'])[0]
 
+print(app_data)
+print(app_data['Date'])
+for date in set(app_data['Date']):
+    print(date)
+    app_data_by_date = app_data.query("`Date` == @date & `App name` != 'Screen off (locked)'")
+    daily_total = app_data_by_date['Duration_Seconds'].sum()
+    print(app_data_by_date)
+    print(daily_total/3600)
+
+# for app in app_data['App name']:
+#     print(app)
+#     name = app
+#     app_data_by_name = app_data.query("`App name` == @name")
+
+merged_data['App name'] = pd.factorize(merged_data['App name'])[0]
 print(merged_data)
 # Split the data into training and testing sets
 X = merged_data[['Duration_Seconds', 'App name', 'Time_y']]
