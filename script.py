@@ -2,8 +2,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-app_data = pd.read_csv('app_data.csv')
-mood_data = pd.read_csv('mood_data.csv')
+app_data = pd.read_csv('./FINAL_participant_data/1/app_data.csv')
+mood_data = pd.read_csv('./FINAL_participant_data/1/mood_data.csv')
 
 # # Normalize the time in app_data to match the times in mood_data
 # app_data['Time'] = pd.to_datetime(app_data['Time'])
@@ -27,7 +27,7 @@ y = merged_data['Happiness']
 # print("test")
 
 # print(y)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
 
 # Fit a linear regression model
 model = LinearRegression()
